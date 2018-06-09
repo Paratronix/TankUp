@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">TankUp</string>
+    <string name="tankupLogo">TankUp!</string>
+    <string name="StartButton">Start</string>
+    <string name="eintrag">Trage dich ein</string>
+
+    <string name="addbtn">Add</string>
+    <string name="btnViewData">List</string>
+</resources>
