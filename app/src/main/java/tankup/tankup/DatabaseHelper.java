@@ -83,6 +83,7 @@ import java.util.List;
                 db.execSQL(createTable2);
                 db.execSQL(createTable3);
                 fillQuizTable();
+                fillTaskTable();
 
             }
 
@@ -129,6 +130,8 @@ import java.util.List;
 
 
 
+
+
              //get names for Quiz
              public ArrayList<String> GetNames()
             {
@@ -148,6 +151,9 @@ import java.util.List;
                 cursor.close();
                 return list;
             }
+
+
+
 
 
             //get punishments for quiz
@@ -176,17 +182,61 @@ import java.util.List;
 
 
 
+
+            private void fillTaskTable(){
+                Task t1 = new Task("Mache 12 Liegestützen");
+                addTask(t1);
+                Task t2 = new Task("Zähle 5 verschiede Pokemons auf");
+                addTask(t2);
+                Task t3 = new Task("Stelle einen Beruf deiner Wahl in Pantomime da");
+                addTask(t3);
+
+            }
+
+            private void addTask (Task task){
+                ContentValues cv = new ContentValues();
+                cv.put(COL_TASK,task.getTask());
+                db.insert(TABLE_TASK,null,cv);
+            }
+
+
+            public List<Task> getAllTasks() {
+                List<Task> taskList = new ArrayList<>();
+                db = getReadableDatabase();
+                Cursor c = db.rawQuery("SELECT * FROM " + TABLE_TASK, null);
+
+                if (c.moveToFirst()) {
+                    do {
+                        Task task = new Task();
+                        task.setTask(c.getString(c.getColumnIndex(COL_TASK)));
+                       taskList.add(task);
+                    } while (c.moveToNext());
+                }
+
+                c.close();
+                return taskList;
+            }
+
+
+
+
+
+
+
+
             private void fillQuizTable(){
                Question q1 = new Question("Wo ist die WM 2018", "Russland", "Thailand", "Argentinien", "Ukraine");
                addQuestion(q1);
                Question q2 = new Question("Was ist die Hauptstadt von Litauen", "Riga", "Minsk", "Belgrad", "Talinn");
                addQuestion(q2);
-               Question q3 = new Question("Iwe viele Bundesländer hat die BRD", "16", "15", "17", "13");
+               Question q3 = new Question("Wie viele Bundesländer hat die BRD", "16", "15", "17", "13");
                addQuestion(q3);
                Question q4 = new Question("Wer ist kein Formel 1 Fahrer", "Glock", "Ocon", "Vettel", "Bottas");
                addQuestion(q4);
                Question q5 = new Question("was ist kein NFL Team", "Unicorns", "Raiders", "Steelers", "Eagels");
                addQuestion(q5);
+               Question q6 = new Question("Wer hat die meisten Abos auf Youtube", "PewDiePie","Gronkh","Ninja","TutiEgG");
+               addQuestion(q6);
             }
 
             private void addQuestion(Question question) {
